@@ -253,18 +253,18 @@ int main(int argc, const char * argv[])
         }
         
         /*double summa = 0;
-        for (int i=0; i<individ; i++)
-        {
-            summa = summa + prob[i];
-            //cout << prob[i];
-            //cout<< " ";
-        }
-        cout<<endl;*/
+         for (int i=0; i<individ; i++)
+         {
+         summa = summa + prob[i];
+         //cout << prob[i];
+         //cout<< " ";
+         }
+         cout<<endl;*/
         
         
         int new_population[individ][gene] = {0,0};
         int check[2][gene];
-
+        
         
         for (int i=0; i<individ; i++)
         {
@@ -287,17 +287,17 @@ int main(int argc, const char * argv[])
                     cross[iter][j] = population[i][j];
                 
                 /*sum = 0;
-                for (int j=0; j<(gene-1); j++)//проходим по генам. Длина
-                {
-                    sum = sum + mas[population[i][j]][population[i][j+1]];
-                    
-                }
-                if (sum == 167)
-                {
-                for (int l=0; l<gene; l++)
-                    check [iter][l]=cross[iter][l];
-                }*/
-
+                 for (int j=0; j<(gene-1); j++)//проходим по генам. Длина
+                 {
+                 sum = sum + mas[population[i][j]][population[i][j+1]];
+                 
+                 }
+                 if (sum == 167)
+                 {
+                 for (int l=0; l<gene; l++)
+                 check [iter][l]=cross[iter][l];
+                 }*/
+                
                 
                 for(int j=0; j<gene; j++)//запрет на скрещивание индивида с собой
                 {
@@ -329,7 +329,7 @@ int main(int argc, const char * argv[])
             
             for (int j=0; j<gene; j++)
             {
-               for (int k=0; k<j; k++) //проверка на повторение генов внутри индивида
+                for (int k=0; k<j; k++) //проверка на повторение генов внутри индивида
                 {
                     if (new_population[i][j] == new_population[i][k])//берётся очередной ген и проверяется одинаковость с предыдущими
                     {
