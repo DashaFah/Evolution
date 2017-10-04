@@ -1,13 +1,17 @@
 
 
-#include <iostream>
+
+//#include "stdafx.h"
 #include <cmath>
-#include<cstdlib>
+#include <iostream>
+#include <cstdlib>
 #include <ctime>
 using namespace std;
 
 int main(int argc, const char * argv[])
 {
+	setlocale(LC_ALL, "rus");
+    
     int const m = 10, n = 10;
 	int mas[m][n]; //граф
 	mas[0][0] = 0; mas[0][1] = 45; mas[0][2] = 21; mas[0][3] = 11; mas[0][4] = 13; mas[0][5] = 5; mas[0][6] = 80; mas[0][7] = 71; mas[0][8] = 75; mas[0][9] = 64;
@@ -63,7 +67,7 @@ int main(int argc, const char * argv[])
     int min = 100000000;
     
     
-    while (generation < 10000)
+    while (generation < 100)
     {
         /*cout<<"Population"<<endl<<endl;
          
@@ -244,7 +248,10 @@ int main(int argc, const char * argv[])
         
         if (sumrank[0]<min) min = sumrank[0];
         else cout << "минимум не улучшился"<<endl;
-        cout<<sumrank[0]<<" "<<min<<endl;
+        cout << sumrank[0] << " " << min << endl;
+		for (int i = 0; i<gene; i++)
+			cout << population[0][i];
+        cout << endl << endl;
         
         double prob[individ] = {0};//определение условных вероятностей
         for (int i=0; i<individ; i++)
@@ -253,21 +260,22 @@ int main(int argc, const char * argv[])
         }
         
         /*double summa = 0;
-        for (int i=0; i<individ; i++)
-        {
-            summa = summa + prob[i];
-            //cout << prob[i];
-            //cout<< " ";
-        }
-        cout<<endl;*/
+         for (int i=0; i<individ; i++)
+         {
+         summa = summa + prob[i];
+         //cout << prob[i];
+         //cout<< " ";
+         }
+         cout<<endl;*/
         
         
         int new_population[individ][gene] = {0,0};
         int check[2][gene];
-
+        
         
         for (int i=0; i<individ; i++)
         {
+			cout << i << " ";
             int cross[2][gene] = {0,0};
             int iter = 0;
             while (iter<2)
@@ -287,17 +295,17 @@ int main(int argc, const char * argv[])
                     cross[iter][j] = population[i][j];
                 
                 /*sum = 0;
-                for (int j=0; j<(gene-1); j++)//проходим по генам. Длина
-                {
-                    sum = sum + mas[population[i][j]][population[i][j+1]];
-                    
-                }
-                if (sum == 167)
-                {
-                for (int l=0; l<gene; l++)
-                    check [iter][l]=cross[iter][l];
-                }*/
-
+                 for (int j=0; j<(gene-1); j++)//проходим по генам. Длина
+                 {
+                 sum = sum + mas[population[i][j]][population[i][j+1]];
+                 
+                 }
+                 if (sum == 167)
+                 {
+                 for (int l=0; l<gene; l++)
+                 check [iter][l]=cross[iter][l];
+                 }*/
+                
                 
                 for(int j=0; j<gene; j++)//запрет на скрещивание индивида с собой
                 {
@@ -329,7 +337,7 @@ int main(int argc, const char * argv[])
             
             for (int j=0; j<gene; j++)
             {
-               for (int k=0; k<j; k++) //проверка на повторение генов внутри индивида
+                for (int k=0; k<j; k++) //проверка на повторение генов внутри индивида
                 {
                     if (new_population[i][j] == new_population[i][k])//берётся очередной ген и проверяется одинаковость с предыдущими
                     {
@@ -345,30 +353,31 @@ int main(int argc, const char * argv[])
                 repeat = false;
             }
             else
-            {
-                bool same = false;
-                for(int k=0; k<i; k++)//проверка на повторение индивидов в новом поколении
-                {
-                    for(int j=0; j<gene; j++)
-                    {
-                        if (new_population[k][j] == new_population[i][j])//берутся по очереди индивиды и сравниваются гены с текущим индивидом
-                            same = true;
-                        else
-                        {
-                            same = false;
-                            break;
-                        }
-                    }
-                    if (same == true)
-                    {
-                        i--;
-                        same = false;
-                    }
-                }
-            }
-            /*   for(int j=0; j<gene; j++)
+             {
+             bool same = false;
+             for(int k=0; k<i; k++)//проверка на повторение индивидов в новом поколении
+             {
+             for(int j=0; j<gene; j++)
+             {
+             if (new_population[k][j] == new_population[i][j])//берутся по очереди индивиды и сравниваются гены с текущим индивидом
+             same = true;
+             else
+             {
+             same = false;
+             break;
+             }
+             }
+             if (same == true)
+             {
+             i--;
+             same = false;
+             }
+             }
+             }
+             /*   for(int j=0; j<gene; j++)
              cout << new_population[i][j];
              cout<<endl;*/
+            
             
         }
         
@@ -377,7 +386,7 @@ int main(int argc, const char * argv[])
             for (int j=0; j<gene; j++)
             {
                 population[i][j] = new_population[i][j];
-                new_population[i][j]={0};
+                new_population[i][j] = 0;
             }
         }
         
@@ -418,6 +427,7 @@ int main(int argc, const char * argv[])
      
      cout << min << num;*/
     
+	system ("pause");
     return 0;
 }
 
