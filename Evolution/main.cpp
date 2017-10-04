@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
 using namespace std;
 
 int main(int argc, const char * argv[])
@@ -65,9 +66,11 @@ int main(int argc, const char * argv[])
     
     int generation = 0;
     int min = 100000000;
+
+    static int maybeenough = 0;
+
     
-    
-    while (generation < 100)
+    while (generation < 1000 /*&& maybeenough<100*/)
     {
         /*cout<<"Population"<<endl<<endl;
          
@@ -233,6 +236,27 @@ int main(int argc, const char * argv[])
             }
         }
         
+        for (int i=0; i<individ; i++)
+        {
+            for (int j=0; j<gene; j++)
+            {
+                cout << population[i][j]<< " ";
+            }
+            cout << sumrank[i] << endl;
+        }
+        
+        /* fstream logFile;
+         logFile.open("log.txt");
+         for (int i=0; i<individ; i++)
+         {
+         for (int j=0; j<gene; j++)
+         {
+         logFile << population[i][j]<< " ";
+         }
+         logFile << endl;
+         }
+         logFile.close();*/
+        
         /*cout<<"Ranked population (First is the shortest)"<<endl<<endl;
          
          for (int i=0; i<individ; i++)
@@ -245,13 +269,36 @@ int main(int argc, const char * argv[])
          cout << endl;
          }
          cout<<endl;*/
+        static int dontchange = 0;
         
-        if (sumrank[0]<min) min = sumrank[0];
-        else cout << "минимум не улучшился"<<endl;
+        if (sumrank[0]<min)
+        {min = sumrank[0];
+            dontchange = 0;}
+        else
+        {cout << "минимум не улучшился"<<endl;
+            dontchange++;
+        }
         cout << sumrank[0] << " " << min << endl;
 		for (int i = 0; i<gene; i++)
 			cout << population[0][i];
         cout << endl << endl;
+        if (dontchange >=5)//божественная мутация
+        {
+            int a, b;
+            do{
+                a = rand()%10;
+                b = rand()%10;
+            } while (a==b);
+            
+            for (int i=0; i<individ; i+=3)
+            {
+                int temp = population[i][a];
+                population[i][a] = population[i][b];
+                population[i][b] = temp;
+            }
+            maybeenough = dontchange;
+        }
+        
         
         double prob[individ] = {0};//определение условных вероятностей
         for (int i=0; i<individ; i++)
@@ -275,7 +322,7 @@ int main(int argc, const char * argv[])
         
         for (int i=0; i<individ; i++)
         {
-			cout << i << " ";
+			//cout << i << " ";
             int cross[2][gene] = {0,0};
             int iter = 0;
             while (iter<2)
@@ -390,9 +437,13 @@ int main(int argc, const char * argv[])
             }
         }
         
+        
+        
+        
         generation++;
     }
     
+    cout << maybeenough << " " << generation;
     
     /*  for(int j=0; j<gene; j++)
      cout << cross[0][j];
